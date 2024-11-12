@@ -1,23 +1,44 @@
 <html>
-    <h1>Brussel</h1>
+   <head> 
     <a href="index.html">Home</a>
+   </head>
 
+   <body>
     <script>
         function huppekee(){
             fetch("http://127.0.0.1:5000/katefelixtrial")
             .then(r => r.json())
-            .then(d => verwerken(d))
+            .then(d => verwerkfunctie(d))
         }
 
         function verwerken(d){
             console.log(d)
             for (let x = 0; x < d.length; x++){
-                document.getElementById("dediv").innerHTML += d[x].LOCATION
+                document.getElementById("locdiv").innerHTML += d[x].LOCATION
+                document.getElementById("timediv").innerHTML += d[x].TIME
             }
         }
+
+        function verwerkfunctie(d){
+            let locatieDiv = document.getElementById("netjesdiv");
+            locatieDiv.innerHTML = "";
+            for (let i = 0; i < d.length; i++){
+                let land_naam = d[i].LOCATION;
+                let jaar = d[i].TIME;  
+                let vlees = d[i].SUBJECT; 
+                let p = document.createElement("p");
+                p.innerText = "Land: " + land_naam + ", Jaar: " + jaar + " , Vlees: " + vlees;
+                locatieDiv.appendChild(p);
+            }
+        }
+
     </script>
 
-    <button onclick="huppekee()">Klik hier</button>
-    <div id="dediv"></div>
+    </body>
+
+    <button onclick="huppekee()">Klik hier</button><br>
+    <hr>
+
+    <div id="netjesdiv"></div><br>
 
 </html>
