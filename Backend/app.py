@@ -7,7 +7,6 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 cors = CORS(app)
-init_hbo_max_routes(app)
 
 
 @app.route("/")
@@ -25,3 +24,5 @@ def ayyoubsebastrial():
 @app.route("/jacobineniektrial")
 def jacobineniektrial():
     return teamb.start()
+
+init_hbo_max_routes(app)
