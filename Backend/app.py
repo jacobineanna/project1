@@ -3,8 +3,11 @@ import teamc
 import teama
 import teamb
 from hbo_max_routs import init_hbo_max_routes
+from flask_cors import CORS
 
 app = Flask(__name__)
+cors = CORS(app)
+
 
 @app.route("/")
 def hello_world():
