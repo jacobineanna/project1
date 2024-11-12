@@ -1,2 +1,11 @@
+import pandas as pd
+netflix = pd.read_csv("netflix.csv")
+
+
+
+
 def start():
-    return "Dit zou het moeten doen"
+    jaar = netflix["releaseYear"].tolist()
+
+    return jaar
+
