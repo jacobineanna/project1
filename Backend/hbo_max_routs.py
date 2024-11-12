@@ -1,6 +1,5 @@
 import pandas as pd 
 from flask import Flask
-from __main__ import app
 
 def init_hbo_max_routes(app):
     @app.route("/hbo_max_data")
@@ -19,7 +18,7 @@ def init_hbo_max_routes(app):
         return mean_num_votes, median_num_votes, std_num_votes
 
     @app.route("/hbo_max_IMDB_rating")
-    def hbo_max_IMDB_votes():
+    def hbo_max_IMDB_ratings():
         df_hbo = pd.read_csv("HBO_Max.csv")
         mean_rating = df_hbo['imdbAverageRating'].mean()
         median_rating = df_hbo['imdbAverageRating'].median()
