@@ -2,8 +2,10 @@ from flask import Flask
 import teamc
 import teama
 import teamb
+from hbo_max_routs import init_hbo_max_routes
 
 app = Flask(__name__)
+init_hbo_max_routes(app)
 
 @app.route("/")
 def hello_world():
