@@ -25,4 +25,9 @@ def ayyoubsebastrial():
 def jacobineniektrial():
     return teamb.start()
 
+@app.route("/azure")
+def azure():
+    return teama.azure()
+
 init_hbo_max_routes(app)
+
