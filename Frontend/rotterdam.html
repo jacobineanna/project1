@@ -1,2 +1,18 @@
 <h1>Rotterdam</h1>
 <a href="index.html">Home</a>
+<button onclick="huppakee16()">huppa</button>
+<script>
+    function huppakee16(){
+        fetch("http://127.0.0.1:5000/ayyoubsebastrial")
+        .then(r => r.json())
+        .then(d => verwerkfunctie(d))
+    }
+    function verwerkfunctie(jaar){
+        console.log(jaar)
+        document.getElementById("uitkomst").innerHTML= "";
+        for(let i = 0; i < jaar.length; i++){
+            document.getElementById("uitkomst").innerHTML += jaar[i].releaseYear+"<br>";
+    }
+    }
+</script>
+<div id="uitkomst"></div>
