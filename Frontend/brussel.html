@@ -1,2 +1,23 @@
-<h1>Brussel</h1>
-<a href="index.html">Home</a>
+<html>
+    <h1>Brussel</h1>
+    <a href="index.html">Home</a>
+
+    <script>
+        function huppekee(){
+            fetch("http://127.0.0.1:5000/katefelixtrial")
+            .then(r => r.json())
+            .then(d => verwerken(d))
+        }
+
+        function verwerken(d){
+            console.log(d)
+            for (let x = 0; x < d.length; x++){
+                document.getElementById("dediv").innerHTML += d[x].LOCATION
+            }
+        }
+    </script>
+
+    <button onclick="huppekee()">Klik hier</button>
+    <div id="dediv"></div>
+
+</html>
