@@ -3,5 +3,34 @@
 <hr>
 
 <script>
-    
+    function HBO_num_votes(){
+        console.log("hbo nu")
+        fetch("http://127.0.0.1:5000/hbo_max_IMDB_num_votes")
+        .then(r => r.json())
+        .then(d => populateHTML(d))
+    }
+    function hbo_rating_votes(){
+        fetch("http://127.0.0.1:5000/hbo_max_IMDB_rating_votes")
+        
+    }
+    function populateHTML(json){
+        console.log("check")
+        console.log("input: "+ json)
+        field_votes = document.getElementById("votes")
+        console.log(json['mean_num_votes'])
+        field_votes.innerHTML = json['mean_num_votes'].toString()
+        //field_votes.innerHTML = "werkt dit"
+    }
+
 </script>
+
+<body>
+    <a>Deze informatie is heel nuttig</a>
+    <button onclick="HBO_num_votes()">
+        Haal huidige votes data
+    </button>
+    <div id="votes">
+
+    </div>
+
+</body>
