@@ -1,6 +1,6 @@
 import pandas as pd
 from json import loads, dumps
-from flask import Flask
+from flask import Flask, jsonify
 
 def init_hbo_max_routes(app):
     @app.route("/hbo_max_data")
@@ -44,7 +44,11 @@ def init_hbo_max_routes(app):
     @app.route("/hbo_max_IMDB_rating_votes")
     def hbo_max_IMDB_rating_votes():
         df = pd.read_csv("HBO_Max.csv")
-        df_rating_votes = df["imdbAverageRating", "imdbNumVotes"]
+        df_rating_votes = df[["imdbAverageRating", "imdbNumVotes"]]
 
-        json_res = df_rating_votes.to_json()
-        return json_res
+        # only take the columns where the value's are not NAN
+        df_rating_votes = df_rating_votes[df_rating_votes["imdbAverageRating"].notna() & df_rating_votes["imdbNumVotes"].notna()]
+
+        json_res = df_rating_votes.to_json(orient="columns")
+
+        return jsonify(json_res)

@@ -1,36 +1,64 @@
 <h1>Breda</h1>
-<a href="index.html">Home</a>
-<hr>
-
-<script>
-    function HBO_num_votes(){
-        console.log("hbo nu")
-        fetch("http://127.0.0.1:5000/hbo_max_IMDB_num_votes")
-        .then(r => r.json())
-        .then(d => populateHTML(d))
-    }
-    function hbo_rating_votes(){
-        fetch("http://127.0.0.1:5000/hbo_max_IMDB_rating_votes")
-        
-    }
-    function populateHTML(json){
-        console.log("check")
-        console.log("input: "+ json)
-        field_votes = document.getElementById("votes")
-        console.log(json['mean_num_votes'])
-        field_votes.innerHTML = json['mean_num_votes'].toString()
-        //field_votes.innerHTML = "werkt dit"
+<head>
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <script>
+    function load_all() {
+      HBO_num_votes();
+      hbo_rating_and_votes();
     }
 
-</script>
+    function HBO_num_votes() {
+      fetch("http://127.0.0.1:5000/hbo_max_IMDB_num_votes")
+        .then((r) => r.json())
+        .then((d) => populateHTML(d));
+    }
 
+    function hbo_rating_and_votes() {
+      fetch("http://127.0.0.1:5000/hbo_max_IMDB_rating_votes")
+        .then((r) => r.json())
+        .then((r) => populatePlot(r));
+    }
+
+    function populateHTML(json) {
+      field_votes = document.getElementById("votes");
+      console.log(json["mean_num_votes"]);
+      field_votes.innerHTML = json["mean_num_votes"].toString();
+    }
+    function populatePlot(input) {
+      input_json = JSON.parse(input);
+      const list_imdb_ratings = Object.values(input_json["imdbAverageRating"]);
+      const list_imdb_votes = Object.values(input_json["imdbNumVotes"]);
+
+      var trace1 = {
+        x: list_imdb_ratings,
+        y: list_imdb_votes,
+        mode: "markers",
+        type: "scatter",
+        name: "IMDb Ratings vs Votes",
+        marker: { size: 8, color: "blue" },
+      };
+
+      const data = [trace1];
+
+      const layout = {
+        title: "Correlation between IMDb Ratings and Number of Votes",
+        xaxis: { title: "IMDb Average Rating" },
+        yaxis: { title: "IMDb Number of Votes" },
+        showlegend: false,
+      };
+
+      Plotly.newPlot("plotje", data, layout, { scrollZoom: true });
+    }
+  </script>
+</head>
 <body>
-    <a>Deze informatie is heel nuttig</a>
-    <button onclick="HBO_num_votes()">
-        Haal huidige votes data
-    </button>
-    <div id="votes">
-
-    </div>
-
+  <a href="index.html">Home</a>
+  <br />
+  <a>Deze informatie is heel nuttig</a>
+  <br />
+  <button onclick="load_all()">Haal huidige imdb data op</button>
+  <br />
+  <div id="votes"></div>
+  <br />
+  <div id="plotje"></div>
 </body>
