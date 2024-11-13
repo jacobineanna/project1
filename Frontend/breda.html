@@ -5,6 +5,7 @@
     function load_all() {
       HBO_num_votes();
       hbo_rating_and_votes();
+      hbo_get_db_rows();
     }
 
     function HBO_num_votes() {
@@ -18,6 +19,13 @@
         .then((r) => r.json())
         .then((r) => populatePlot(r));
     }
+    
+    function hbo_get_db_rows(){
+      fetch("http://127.0.0.1:5000/hbo_db_get_all")
+      .then(r => r.json())
+      .then(r => console.log(r))
+    }
+
 
     function populateHTML(json) {
       field_votes = document.getElementById("votes");

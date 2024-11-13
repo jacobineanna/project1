@@ -1,8 +1,18 @@
 import pandas as pd
 from json import loads, dumps
 from flask import Flask, jsonify
+from utils.connector import connection
+
+db_connection = connection()
+
 
 def init_hbo_max_routes(app):
+    @app.route("/init_hbo_db")
+    def init_hbo_db():
+        connection()
+        return 'dit werkt'
+
+
     @app.route("/hbo_max_data")
     def hbo_max_data():
         df_hbo = pd.read_csv("HBO_Max.csv")
@@ -52,3 +62,8 @@ def init_hbo_max_routes(app):
         json_res = df_rating_votes.to_json(orient="columns")
 
         return jsonify(json_res)
+    
+    @app.route("/hbo_db_get_all")
+    def hbo_db_get_all():
+        res = db_connection.get_all()
+        return jsonify(res)
